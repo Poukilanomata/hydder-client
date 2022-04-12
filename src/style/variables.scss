@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+$main-color: rgb(247, 66, 66);
+$main-color-1: rgba(247, 66, 66, 0.8);
+$main-color-2: rgba(247, 66, 66, 0.6);
+$main-color-3: rgba(247, 66, 66, 0.4);
+$main-color-4: rgba(247, 66, 66, 0.2);
+$main-color-5: rgba(247, 66, 66, 0.1);
+    
+$main-negatif: #EB685B;
+
+$main-green: rgb(62, 204, 95);
+$main-green-1: rgba(62, 204, 95, 0.8);
+$main-green-2: rgba(62, 204, 95, 0.6);
+$main-green-3: rgba(62, 204, 95, 0.4);
+$main-green-4: rgba(62, 204, 95, 0.2);
+$main-green-5: rgba(62, 204, 95, 0.1);
+
+$main-blue: #55BCC9;
+$main-pink: #f86ecf;
+$main-dark-blue: #356acc;
+
+$light: white;
+$main-light: rgb(236, 241, 248);
+$main-light-2: rgb(230, 235, 243);
+$main-light-3: rgb(224, 229, 237);
+
+$border: #afb2b9;
+
+$font-color-1: rgb(0, 0, 0);
+$font-color-2: rgb(20, 20, 20);
+$font-color-3: rgb(40, 40, 40);
+$font-color-4: rgb(60, 60, 60);
+$font-color-5: rgb(80, 80, 80);
+$font-color-6: rgb(100, 100, 100);
+$font-color-7: rgb(120, 120, 120);
+$font-color-8: rgb(140, 140, 140);
+
+
+$roboto: 'Roboto', sans-serif;
+$lato: 'Lato', sans-serif;
+
+@mixin hover-supported {    
+    @media not all and (pointer: coarse) {
+        &:hover {
+            @content;
+        }
+    }
+}
+
+:export{
+    font_color_1: $font-color-1;
+    font_color_2: $font-color-2;
+    font_color_3: $font-color-3;
+    font_color_4: $font-color-4;
+    font_color_5: $font-color-5;
+    font_color_6: $font-color-6;
+    font_color_7: $font-color-7;
+    font_color_8: $font-color-8;
+
+    main_color: $main-color;
+    main_negatif: $main-negatif;
+    main_green: $main-green;
+    main_blue: $main-blue;
+    main_pink: $main-pink;
+    main_dark_blue: $main-dark-blue;
+    main_light: $main-light;
+    main_light_2: $main-light-2;
+    main_light_3: $main-light-3;
+
+}

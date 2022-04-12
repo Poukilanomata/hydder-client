@@ -1,0 +1,156 @@
+@import 'variables.scss';
+
+div.header{
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 9; //max-z-index
+    height: calc(100% - 1px);
+    width: 100%;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 3px 9px;
+
+    div.header-left {
+        grid-column: 1;
+        width: min-content;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        margin-left: 0;
+        height: 100%;
+
+        a{
+            margin-left: 20px;
+            margin-top: 5px;
+            width: min-content;
+
+            svg{
+                width: 35px;
+                height: 35px;
+                fill: $font-color-6;
+                border: none;
+            }
+
+            img{
+                width: 35px;
+                height: 35px;
+                border: none;
+                border-radius: 30%;
+            }
+        }
+    }
+
+    div.search{
+        grid-column: 2;
+        height: 30px;
+        max-width: 600px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: auto 50px;
+        grid-template-rows: auto;
+        align-items: center;
+        transition-duration: 0.1s;
+        margin-left: 10px;
+        margin-right: 10px;
+
+        &:hover{
+            cursor: not-allowed !important;
+        }
+
+        input{
+            grid-column: 1;
+            grid-row: 1;
+            width: calc(100% - 40px);
+            height: calc(100% - 2px);
+            padding: 0 20px;
+            height: 100%;
+            font-family: $roboto;
+            font-size: 14px;
+            color: $font-color-3;
+            transition-duration: 0.2s;
+            border-left: solid 1px $border;
+            border-top: solid 1px $border;
+            border-bottom: solid 1px $border;
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
+
+            &:focus, &:hover{
+                background-color: rgb(245, 245, 245);
+                cursor: not-allowed;
+            }
+        }
+
+        div.container{
+            height: 100%;
+            width: 100%;
+            background-color: rgb(236, 236, 236);     
+            grid-column: 2;
+            grid-row: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-right: solid 1px rgb(215, 215, 215);
+            border-top: solid 1px rgb(215, 215, 215);
+            border-bottom: solid 1px rgb(215, 215, 215);
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+
+            svg{
+                height: 20px;
+                width: 20px;
+                fill: rgb(133, 143, 153);
+                 @include hover-supported(){
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    div.header-right{
+        a{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+            border: solid 2px $main-color;
+            border-radius: 5px;
+            padding: 5px 25px;
+            transition-duration: 0.2s;
+            max-width: 50px;
+            margin-left: auto;
+    
+            &:hover{
+                cursor: pointer;
+                background-color: $main-color;
+                span{
+                    color: $light;
+                }
+            }
+    
+            span{
+                font-size: 14px;
+                font-family: $roboto;
+                color: $main-color;
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    div.header{
+        div.header-left{
+            a{
+                margin-left: 10px;
+            }
+        }
+        div.search{
+            display: none;
+        }
+    }
+}

@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+@import 'variables.scss';
+
+div.newpost{
+    width: 100%;
+    background-color: white;
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 60px auto;
+    grid-template-rows: auto auto 40px;
+    align-items: center;
+    border-top-style: solid;
+    border-top-width: 4px;
+    border-image: linear-gradient(90deg, rgba(9,181,43,1) 0%, rgba(92,67,234,1) 46%, rgba(237,10,31,1) 80%);
+    border-image-slice: 1;
+    border-radius: 5px;
+
+    div.left{
+        grid-column: 1;
+        grid-row: 1/4;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        label{ 
+            height: 30px;
+            width: 30px;
+            margin-top: auto;
+            margin-bottom: 20px;
+            svg {
+                height: 30px;
+                width: 30px;
+                fill: $main-dark-blue;
+                cursor: pointer;
+            }
+        }
+    }
+
+    textarea{
+        border: none;
+        outline: none;
+        grid-column: 2;
+        grid-row: 1;
+        width: auto;
+        height: auto;
+        resize: none;
+        margin-bottom: auto;
+        margin-top: 15px;
+        padding: 10px;
+        padding-left: 0;
+        font-size: 15px;
+        font-family: $roboto;
+        background-color: white;
+        color: $font-color-2;
+        border-radius: 0;
+    }
+
+    output{
+        grid-column: 2;
+        grid-row: 2;
+        width: auto;
+        max-width: 80%;
+        height: auto;
+        max-height: 200px;
+        margin-right: auto;
+        display: flex;
+        flex-direction: row;
+        margin-left: 10px;
+
+        img{
+            @keyframes fadeIn {
+                from {
+                    transform: scale(0.5);
+                }
+                to {
+                    transform: scale(1);
+                }
+            }
+            
+            animation-name: fadeIn;
+            animation-duration: 0.2s;
+            animation-timing-function: ease-in-out;
+            max-width: 100%;
+	        max-height: 200px;
+            border-radius: 4px;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        }
+        
+        svg.close{
+            height: 15px;
+            width: 15px;
+            fill: white;
+            margin-right: auto;
+            margin-top: 4px;
+            margin-left: -30px;
+            background-color: rgba(68, 68, 68, 0.5);
+            padding: 5px;
+            border-radius: 50%;
+            transition-duration: 0.2s;
+
+            @include hover-supported(){
+                cursor: pointer;
+                background-color: rgba(68, 68, 68, 0.8);
+            }
+        }
+
+        svg.loader{
+            width: 70%;
+            stroke: $main-pink;
+            margin-bottom: auto;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
+    a{
+        margin-left: auto;
+        margin-right: 20px;
+
+        div.submit {
+            margin-right: 0;
+        }
+    }
+
+    div.submit{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        grid-column: 2;
+        grid-row: 3;
+        margin-left: auto;
+        margin-right: 10px;
+        background-color: $main-color;
+        border-radius: 15px;
+        height: 30px;
+        transition-duration: 0.2s;
+
+        @include hover-supported(){
+            cursor: pointer;
+        }
+
+        span{
+            font-size: 12px;
+            font-family: $roboto;
+            color: $light;
+            padding: 12px 10px 12px 20px;
+            border-radius: 6px;
+            color: white;
+        }
+
+        svg{
+            fill: $main-light;
+            height: 15px;
+            width: 15px;
+            margin-right: 10px;
+            transform: rotate(10deg);
+        }
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    div.newpost{
+        margin-top: 0;
+        border-radius: 0;
+        border-bottom: solid 1px $border;
+    }
+}
