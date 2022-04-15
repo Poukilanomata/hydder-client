@@ -25,7 +25,7 @@ function Share(props) {
     return(
         <>
             <div className="share" onClick={() => {
-                navigator.clipboard.writeText("https://hydder.com")
+                navigator.clipboard.writeText("https://www.hydder.com")
                 toast.success('Link copied to clipboard !', {
                     position: "bottom-center",
                     autoClose: 1200,
@@ -92,7 +92,7 @@ class Rank extends React.Component {
             <div className="rank" >
                 <div className="title">
                     <span className="title">Leaderboard</span>
-                    <span className="players">79.6k players !</span>
+                    <span className="players">{this.props.total_users} players !</span>
                 </div>
                 <div className="users">
                     {this.state.users.map((user, index) => {
@@ -108,11 +108,17 @@ class Rank extends React.Component {
 }
 
 class TopHead extends React.Component{
+    
+    constructor(props) {
+        super(props)
+        console.log(props)
+        this.state = {}
+    }
 
     render(){
 
         const renderer = ({ days, hours, minutes, seconds, completed }) => {
-            const Completionist = () => {return(<>Timer will be back soon</>)}
+            const Completionist = () => {return(<>...</>)}
             if (completed) {
               // Render a completed state
               return <Completionist />;
@@ -136,8 +142,13 @@ class TopHead extends React.Component{
                     </div>
 
                     <div className="timer">
-                        <span className="title">Season ends in :</span>
-                        <span className="time"><Countdown date={Date.now() + 100000000} renderer={renderer} /></span>
+                        <span className="title">Season ends in : </span>
+                        <span className="time">
+                            {this.props.ends?
+                            <Countdown date={this.props.ends} renderer={renderer}/>
+                            :<span>...</span>}
+                            
+                        </span>
                         
                         <span className="rank">Rank - #{this.props.user.ranking.rank}</span>
                     </div>
@@ -159,14 +170,37 @@ const mapStateToProps = (state) => {
 const Top = connect(mapStateToProps)(TopHead)
 
 
-
-
 export default class Main extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            ends: false,
+            total_users: 0,
+        }
+
+        this.get_general = this.get_general.bind(this)
+    }
+
+    get_general() {
+        axios.post(params.server+"/general/general").then(res => {
+            if(res.data.success) {
+                this.setState({
+                    ends: res.data.ends,
+                    total_users: res.data.general
+                })
+            }
+        })
+    }
+
+    componentDidMount() {
+        this.get_general()
+    }
+
     render() {
         return (
         <div className="container-right">
-            <Top />
-            <Rank/>
+            <Top ends={this.state.ends}/>
+            <Rank total_users={this.state.total_users}/>
         </div>
         );
     }

@@ -180,7 +180,7 @@ class Newpost extends React.Component {
                         type="file"
                         name="image"
                         id="image"
-                        accept=".jpg, .jpeg, .png, .gif, .webp, .tiff"
+                        accept=".jpg, .jpeg, .png, .gif, .webp, .tiff, .jfif"
                         onChange={(e) => this.handleImageUpload(e)}
                         style={{display: 'none'}}
                         ref={this.file}

@@ -275,13 +275,13 @@ class AccountComponent extends React.Component{
                             <div className='basic-info'>
                                 <input className='surname' onChange={this.handle_surname_change} onKeyPress={this.handle_surname_submit} defaultValue={this.props.user.surname} />
                                 <span className='name'>@{this.props.user.name}</span>
-                                {!isMobile? <span className='logout' onClick={this.logout}>Logout 😢</span> :null}
+                                {!isMobile? <span className='logout' onClick={this.logout}>Logout</span> :null}
                                 
                             </div>
                             <div className='global'>
                                 <span className='rank'>Rank : #{this.props.user.rank}</span>
                                 <span className='rank'>Hype : {this.props.user.ranking.score}🔥</span>
-                                {isMobile?<span className='logout' onClick={this.logout}>Logout 😢</span>:null}
+                                {isMobile?<span className='logout' onClick={this.logout}>Logout</span>:null}
                             </div>
                         </>
                         :<>

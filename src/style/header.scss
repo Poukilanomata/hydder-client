@@ -112,6 +112,8 @@ div.header{
     }
 
     div.header-right{
+        grid-row: 1;
+        grid-column: 3;
         a{
             display: flex;
             justify-content: center;
@@ -151,6 +153,16 @@ div.header{
         }
         div.search{
             display: none;
+        }
+
+        div.header-right{
+            a{
+                background-color: $main-color;
+                span{
+                    color: $light;
+                }
+                margin-right: 5px;
+            }
         }
     }
 }

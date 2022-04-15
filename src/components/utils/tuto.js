@@ -22,7 +22,7 @@ class TutoComponent extends React.Component {
             <div id='main-tuto'>
                 <div className='tuto-content'>
                     <div className='top'>
-                        <h1>Welcome on Hydder !</h1>
+                        <h1>Welcome to Hydder !</h1>
                         <h2>Only the best ! (dw ur already the best)</h2>
                     </div>
                     <div className='img-container'> 

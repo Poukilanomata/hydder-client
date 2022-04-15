@@ -32,14 +32,13 @@ class Text extends React.Component {
     }
 
     handle_words(word) {
-
-        if(word.startsWith("http") || word.startsWith("https")) {
+        if(word.match(/[\r\n]+http/g) || word.match(/[\r\n]+https/g)) {
             return(
                 <a href={word} target="_blank" rel="noopener noreferrer">
                     {word+" "}
                 </a>
             )
-        } else if(word.startsWith('youtu.be') || word.startsWith('youtube.com')) {
+        } else if(word.match(/[\r\n]+youtu.be/g) || word.match(/[\r\n]+youtube.com/g)) {
             return(
                 <>
                 <a href={'https://'+word} target="_blank" rel="noopener noreferrer">
@@ -50,18 +49,6 @@ class Text extends React.Component {
                 </span>
                 </>
                 
-            )
-        } else if(word.startsWith('#')) {
-            return(
-                <>
-                <Link to={'/tag/'+word.slice(1)}>
-                    {word}
-                </Link>
-                <span>
-                    {' '}
-                </span>
-                </>
-
             )
         }else {
             return(
@@ -74,7 +61,7 @@ class Text extends React.Component {
         return(
             <>
             {this.props.text !== "null"?
-                this.props.text.split(" ").map((word, index) => {
+                this.props.text.split(' ').map((word, index) => {
                     return(
                         <span key={index}>
                             {this.handle_words(word)}
@@ -312,7 +299,7 @@ class Reply extends React.Component {
                         <MdImage/>
                     </label>
 
-                    <input type='file' accept=".jpg, .jpeg, .png, .gif" style={{
+                    <input type='file' accept=".jpg, .jpeg, .png, .gif, .webp, .tiff, .jfif" style={{
                         display: "none"
                     }} ref={this.file} onChange={this.handleImageUpload} id={this.props.id+'image_input'} />
 
@@ -603,7 +590,7 @@ class Post extends React.Component {
                                     draggable: false,
                                     progress: undefined,
                                 });
-                                navigator.clipboard.writeText("https://hydder.com/"+this.props.id)
+                                navigator.clipboard.writeText("https://www.hydder.com/"+this.props.id)
                             }}>
                                 <IoMdShareAlt />
                             </div>

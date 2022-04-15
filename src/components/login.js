@@ -14,6 +14,7 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { changeStatus, isNewAccount, logout } from '../app/auth';
+import { toastAll } from '../utils/functions';
 
 import params from '../variables';
 import variables from '../style/variables.scss'
@@ -89,15 +90,7 @@ class LoginComponent extends React.Component {
                                 redirect: true
                             })
                         } else {
-                            toast.error(response.data.message, {
-                                position: "bottom-center",
-                                autoClose: 2000,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: true,
-                                draggable: true,
-                                progress: undefined,
-                            })
+                            toastAll(response.data.message)
                         }
                     }
                 )
@@ -124,15 +117,7 @@ class LoginComponent extends React.Component {
                                 redirect: true
                             })
                         }else {
-                            toast.error(response.data.message, {
-                                position: "bottom-center",
-                                autoClose: 2000,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: true,
-                                draggable: true,
-                                progress: undefined,
-                            })
+                            toastAll(response.data.message)
                         }
                     }
                 )
