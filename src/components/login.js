@@ -50,24 +50,6 @@ class LoginComponent extends React.Component {
     handle_submit(e) {
         var rules, validation
 
-        function toastAll(e){
-            for (const [key, value] of Object.entries(e)) {
-
-                value.forEach(element => {
-
-                    toast.error(element, {
-                        position: "bottom-center",
-                        autoClose: 2000,
-                        hideProgressBar: false,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                    })
-                })
-            }
-        }
-
         if(this.state.action && this.state.pwd1 === this.state.pwd2 && this.state.check) {
             rules = {
                 username: 'required|string|between:5,20',

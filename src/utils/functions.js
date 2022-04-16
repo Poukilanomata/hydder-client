@@ -53,10 +53,20 @@ export function get_user(dispatch){
 }
 
 export function toastAll(e){
-    for (const [key, value] of Object.entries(e)) {
-
-        value.forEach(element => {
-
+    console.log(e)
+    if(typeof(e) === 'string'){
+        toast.error(e, {
+            position: "bottom-center",
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+        })
+    } else if(typeof(e) === 'array'){
+        for (let i = 0; i < e.length; i++) {
+            const element = e[i];
             toast.error(element, {
                 position: "bottom-center",
                 autoClose: 2000,
@@ -66,7 +76,22 @@ export function toastAll(e){
                 draggable: true,
                 progress: undefined,
             })
-        })
-    }
+        }
+    }else {
+        for (const [key, value] of Object.entries(e)) {
+
+            value.forEach(element => {
     
+                toast.error(element, {
+                    position: "bottom-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                })
+            })
+        }
+    }    
 }
