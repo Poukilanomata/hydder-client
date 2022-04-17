@@ -186,7 +186,7 @@ export default class Main extends React.Component {
             if(res.data.success) {
                 this.setState({
                     ends: res.data.ends,
-                    total_users: res.data.general
+                    total_users: res.data.general.users.total
                 })
             }
         })
