@@ -82,6 +82,8 @@ class Reply extends React.Component {
         this.handleTextarea = this.handleTextarea.bind(this);
         this.handleDrop = this.handleDrop.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.fetchNewReplies = this.fetchNewReplies.bind(this);
+
 
         this.state = {
             text: '',
@@ -111,11 +113,14 @@ class Reply extends React.Component {
     }
 
     async fetchNewReplies() {
+        console.log(this.state)
         if(!this.state.end && !this.state.isloading && this.state.loadnew) {
+            console.log('fetching')
             await this.setStateAsync({
                 isloading: true,
                 loadnew: false
             })
+            
             axios.post(params.server+'/post/fetch_posts', {
                 ids: this.state.ids,
                 index: this.state.current_index,
@@ -133,6 +138,7 @@ class Reply extends React.Component {
 
                     await this.setStateAsync({
                         current_index: this.state.current_index + 1,
+                        loadnew: true,
                     })
 
                 } else {
@@ -360,6 +366,14 @@ class Reply extends React.Component {
                         )
                     })}
                     </div>
+                    {!this.state.end?
+                    <span className="see-more" onClick={
+                        () => {
+                            this.fetchNewReplies()
+                        }
+                    }>See more</span>
+                    :null}
+                    
                 </>
                 :
                 null}
@@ -577,10 +591,10 @@ class Post extends React.Component {
                             </RequireLoggedIn>
                             <span className="score">{this.state.score}</span> 
                         </div>
-                        {this.props.level > 0?
-                            null
-                        :
-                            <div className="share" onClick={() => {
+                        
+                    </div>
+                    <div className="interaction-bottom">
+                            <IoMdShareAlt onClick={() => {
                                 toast.success('Link copied to clipboard !', {
                                     position: "bottom-center",
                                     autoClose: 1300,
@@ -590,12 +604,7 @@ class Post extends React.Component {
                                     draggable: false,
                                     progress: undefined,
                                 });
-                                navigator.clipboard.writeText("https://www.hydder.com/"+this.props.id)
-                            }}>
-                                <IoMdShareAlt />
-                            </div>
-                        }
-                        
+                                navigator.clipboard.writeText("https://www.hydder.com/"+this.props.id)}} />
                     </div>
                     {this.state.show_reply && this.props.connected?
                         <Reply user={this.props.user} connected={this.props.connected}  ref={this.reply} id={this.props.id} key={this.props.id + "reply"} level={this.props.level} />

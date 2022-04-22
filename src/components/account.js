@@ -37,7 +37,6 @@ class AccountComponent extends React.Component{
             ids: [],
 
             redirect: false,
-            pp: this.props.user? this.props.user.profile_picture: 'false'
         }
 
         this.handleScroll = this.handleScroll.bind(this);
@@ -112,16 +111,14 @@ class AccountComponent extends React.Component{
             if(this.props.user){
                 this.getUser()
                 this.setState({
-                    owner: this.props.user._id === this.props.id,
-                    pp: this.props.user.profile_picture
+                    owner: this.props.user._id === this.props.id
                 })
             }
         }
 
         if(this.props.user !== prevProps.user && this.props.user){
             this.setState({
-                owner: this.props.user._id === this.props.id,
-                pp: this.props.user.profile_picture
+                owner: this.props.user._id === this.props.id
             })
             this.getUser()
         }
@@ -259,12 +256,12 @@ class AccountComponent extends React.Component{
                             <>
                                 <input onChange={this.upload_image} type={'file'} accept=".jpg, .jpeg, .png, .tiff, .gif, .webp" id='image-account'/>
                                 <label htmlFor='image-account' className='img-container'>
-                                    <img src={getPP(this.state.pp)} alt=''/>
+                                    <img src={getPP(this.props.user.profile_picture)} alt=''/>
                                 </label>
                             </>
                             :
                             <div className='img-container'>
-                                <img src={getPP(this.props.user.profile_picture)} alt=''/>
+                                <img src={getPP(this.state.user.profile_picture)} alt=''/>
                             </div>
                             }
                         </div>
