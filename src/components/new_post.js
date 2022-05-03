@@ -10,6 +10,7 @@ import { ReactComponent as Cross } from '../svg/cross-sign.svg'
 import { ReactComponent as Send } from '../svg/send.svg'
 
 import { MdImage } from "react-icons/md"
+import { toast } from 'react-toastify';
 
 //import components
 import TextareaAutosize from 'react-textarea-autosize'
@@ -89,7 +90,7 @@ class Newpost extends React.Component {
         this.state.formdata.delete('origin')
         this.state.formdata.append('origin', 'root')
         
-
+        console.log(this.state.sendable)
         if(this.state.text.length > 0 && this.state.sendable === true && this.props.user.isLoaded){
 
             this.setState({
@@ -138,14 +139,10 @@ class Newpost extends React.Component {
             .then(res => {
                 handleResponse(res)
             })*/
-        }else{
-            this.setState({
-                sendable: true
+        } else {
+            toast.error('Please fill this empty place ...', {
+                position: toast.POSITION.BOTTOM_CENTER
             })
-        }
-        // Display the values
-        for (var value of this.state.formdata.values()) {
-            console.log(value);
         }
     }
 

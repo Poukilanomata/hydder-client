@@ -276,7 +276,7 @@ class AccountComponent extends React.Component{
                                 
                             </div>
                             <div className='global'>
-                                <span className='rank'>Rank : #{this.props.user.rank}</span>
+                                <span className='rank'>Rank : #{this.props.user.ranking.rank}</span>
                                 <span className='rank'>Hype : {this.props.user.ranking.score}🔥</span>
                                 {isMobile?<span className='logout' onClick={this.logout}>Logout</span>:null}
                             </div>
@@ -290,7 +290,7 @@ class AccountComponent extends React.Component{
                             
                         </div>
                         <div className='global'>
-                            <span className='rank'>Rank : #{this.state.user.rank}</span>
+                            <span className='rank'>Rank : #{this.state.user.ranking.rank}</span>
                             <span className='rank'>Hype : {this.state.user.ranking.score}🔥</span>
                         </div>
                         </>
