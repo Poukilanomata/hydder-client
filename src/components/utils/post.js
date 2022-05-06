@@ -15,12 +15,11 @@ import { MdImage } from "react-icons/md"
 import { IoMdShareAlt } from "react-icons/io"
 
 import { getPP } from "../../utils/functions";
-import { RequireLoggedIn} from "../../utils/components";
+import { RequireLoggedIn, Confirm} from "../../utils/components";
 
 import params from "../../variables";
 
 axios.defaults.withCredentials = true;
-
 
 class Text extends React.Component {
     constructor(props) {
@@ -29,26 +28,33 @@ class Text extends React.Component {
             displayed_link: this.props.content,
             tt_carachter: 0,
         }
+
+        this.ytb_match = /[\r\n]+youtu.be\/|[\r\n]+youtube.com\/|youtu.be\/|youtube.com\/|[\r\n]+https:\/\/youtu.be\/|[\r\n]+https:\/\/youtube.com\/|https:\/\/youtu.be\/|https:\/\/youtube.com\//g
     }
 
     handle_words(word) {
-        if(word.match(/[\r\n]+http/g) || word.match(/[\r\n]+https/g)) {
-            return(
-                <a href={word} target="_blank" rel="noopener noreferrer">
-                    {word+" "}
-                </a>
-            )
-        } else if(word.match(/[\r\n]+youtu.be/g) || word.match(/[\r\n]+youtube.com/g)) {
+        if(word.match(this.ytb_match)){
+            let video_id = word.split("=")[1] || word.split("/")[word.split('/').length -1]
             return(
                 <>
-                <a href={'https://'+word} target="_blank" rel="noopener noreferrer">
+                <a href={'https://youtu.be/'+video_id} target="_blank" rel="noopener noreferrer">
+                    {'youtu.be/'+video_id}
+                </a>
+                <span>
+                    {' '}
+                </span>
+                </>
+            )
+        }else if(word.match(/[\r\n]+https:\/\/|https:\/\/|[\r\n]+http:\/\/|http:\/\//g) ) {
+            return(
+                <>
+                <a href={word} target="_blank" rel="noopener noreferrer">
                     {word}
                 </a>
                 <span>
                     {' '}
                 </span>
                 </>
-                
             )
         }else {
             return(
@@ -61,7 +67,7 @@ class Text extends React.Component {
         return(
             <>
             {this.props.text !== "null"?
-                this.props.text.split(' ').map((word, index) => {
+                this.props.text.split(/ |[\r]/).map((word, index) => {
                     return(
                         <span key={index}>
                             {this.handle_words(word)}
@@ -395,14 +401,20 @@ class Post extends React.Component {
 
             replies: [],
             post_class: this.props.level > 0 ? "post reply" : "post",
+            deleted: false,
+            popup: false,
         }
 
         this.vote = this.vote.bind(this);
         this.show_reply = this.show_reply.bind(this);
         this.HandleIntegration = this.HandleIntegration.bind(this);
         this.Content = this.Content.bind(this);
+        this.delete_post = this.delete_post.bind(this);
+        this.close_popup = this.close_popup.bind(this);
 
         this.reply = React.createRef();
+
+        this.ytb_match = /[\r\n]+youtu.be\/|[\r\n]+youtube.com\/|youtu.be\/|youtube.com\/|[\r\n]+https:\/\/youtu.be\/|[\r\n]+https:\/\/youtube.com\/|https:\/\/youtu.be\/|https:\/\/youtube.com\//g
     }
 
     show_reply() {
@@ -475,10 +487,12 @@ class Post extends React.Component {
                     intergration: <img src={image_url} alt="post" />
                 })
             } else {
-                let words = text.split(" ");
+                let words = text.split(/ |[\r]/);
+                console.log(words);
                 words.forEach(word => {
-                    if(word.startsWith("https://www.youtube.com") || word.startsWith("http://www.youtube.com") || word.startsWith("https://youtu.be") || word.startsWith("http://youtu.be")){
-                        let video_id = word.split("=")[1];
+                    if(word.match(this.ytb_match)){
+                        
+                        let video_id = word.split("=")[1] || word.split("/")[word.split('/').length -1]
                         let video_url = "https://www.youtube.com/embed/"+video_id;
 
                         this.setState({
@@ -491,19 +505,6 @@ class Post extends React.Component {
                         })      
                         return
 
-                    } else if(word.startsWith('youtu.be')) {
-                        let video_id = word.split("/")[1];
-                        let video_url = "https://www.youtube.com/embed/"+video_id;
-
-                        this.setState({
-                            intergration: <iframe 
-                            title={'Youtube video'}
-                            src={video_url} 
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen={true}/>
-                        })
-                        return
                     }
                 })
             }
@@ -541,6 +542,17 @@ class Post extends React.Component {
         }
     }
 
+    delete_post(){
+        axios.post(params.server+"/post/delete_post", 
+        {
+            id: this.props.id,
+        }).then(res => {
+            this.setState({
+                deleted: true
+            })
+        })
+    }
+
     Content(){
         return(
             <div className="content" onClick={() => this.show_reply()}>
@@ -562,8 +574,16 @@ class Post extends React.Component {
         )
     }
 
+    close_popup(){
+        this.setState({
+            popup: false
+        })
+    }
+
     render(){
             return(
+                <>
+                {!this.state.deleted?
                 <div className={this.state.post_class} onDoubleClick={() => this.vote(true)} >
                     <div className="post-header">
                         <img className="account" src={getPP(this.props.post.auth.profile_picture)} alt='profil'/>
@@ -595,21 +615,45 @@ class Post extends React.Component {
                     </div>
                     <div className="interaction-bottom">
                             <IoMdShareAlt onClick={() => {
-                                toast.success('Link copied to clipboard !', {
-                                    position: "bottom-center",
-                                    autoClose: 1300,
-                                    hideProgressBar: true,
-                                    closeOnClick: true,
-                                    pauseOnHover: true,
-                                    draggable: false,
-                                    progress: undefined,
-                                });
-                                navigator.clipboard.writeText("https://www.hydder.com/"+this.props.id)}} />
+                            toast.success('Link copied to clipboard !', {
+                                position: "bottom-center",
+                                autoClose: 1300,
+                                hideProgressBar: true,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: false,
+                                progress: undefined,
+                            });
+                            navigator.clipboard.writeText("https://www.hydder.com/"+this.props.id)}} />
+
+                            {this.props.self? 
+                            <>  
+                                <div className="delete">
+                                    <span className="delete" onClick={() => this.setState({
+                                        popup: true
+                                    })}>delete</span>
+                                </div>
+                                
+                                {this.state.popup?
+                                    <Confirm
+                                        onClose={() => this.close_popup()}
+                                        onConfirm={() => this.delete_post()} 
+                                    >
+                                        <div>
+                                            <p className="confirm_delete">Are you sure you want to delete this post?</p>
+                                        </div>
+                                    </Confirm>
+                                :null}
+                            </>
+                            :null}
                     </div>
                     {this.state.show_reply && this.props.connected?
                         <Reply user={this.props.user} connected={this.props.connected}  ref={this.reply} id={this.props.id} key={this.props.id + "reply"} level={this.props.level} />
                     :null}
+
                 </div>
+                :null}
+                </>
             )
         }
 }

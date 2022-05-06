@@ -30,4 +30,25 @@ const mapStateToProps = state => {
     };
 }
 
+
+export function Confirm (props) {
+
+  const handleConfirm = () => {
+      // execute the function passed in as props.onConfirm
+      props.onConfirm();
+      // return to the parent component
+      props.onClose()
+  }
+
+  return (
+      <div className="confirm_my_choice">
+          <>
+              {props.children}
+          </>
+          <span className="cancel" onClick={() => props.onClose()}>Nop</span>
+          <span className="confirm" onClick={() => handleConfirm()}>Confirm</span>
+      </div>
+  )
+}
+
 export const RequireLoggedIn = connect(mapStateToProps)(requireLoggedIn);

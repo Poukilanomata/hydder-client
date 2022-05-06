@@ -310,6 +310,7 @@ class AccountComponent extends React.Component{
                                         connected={true}
                                         user={this.props.b_user}
                                         level={0}
+                                        self={this.state.owner}
                                     />
                                     </>
                                 )

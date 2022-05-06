@@ -258,6 +258,19 @@ div.post, div.post-error{
                 background-color: $main-light;
             }
         }
+
+        div.delete{
+            span.delete{
+                margin-left: 15px;
+                font-family: $roboto;
+                color: $main-color;
+                font-size: 13px;
+                cursor: pointer;
+                padding: 3px 10px;
+                border-radius: 5px;
+                border: solid 1px $main-color;
+            }
+        }
     }
 
     div.reply-input{
@@ -496,6 +509,7 @@ div.post, div.post-error{
         border-radius: 13px;
         cursor: pointer;
         background-color: $main-dark-blue;
+        margin-bottom: 5px;
     }
 }
 

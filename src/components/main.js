@@ -65,8 +65,6 @@ class Main extends React.Component{
 
     async fetchNewPosts(post_id){
         if(!this.state.end){
-            
-            console.log("fetching new posts : "+this.state.current_index)
 
             axios.post(params.server+'/post/fetch_posts', {
                 ids: this.state.ids,
@@ -104,7 +102,6 @@ class Main extends React.Component{
 
                         if(saved){
                             array.unshift(saved)
-                            console.log(array)
                             return array
                         }
 
